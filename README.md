@@ -9,5 +9,13 @@ excepté celle ou celui qui a eu sont cadeau réservé.
 
 1. Front -> Angular
 2. Back -> Java / Spring
-3. BDD -> MongoDB
+3. BDD -> MySQL
+
+=================================================================
+
+Le script de BDD à executer avant le lancement de l'API -> backend/databaseAPI.sql
+
+Lancement de l'API backend, run ...
+( l'API backend à été dévellopé avec l'IDE intelliJ / les dépendance avec spring initializr )
+
 
