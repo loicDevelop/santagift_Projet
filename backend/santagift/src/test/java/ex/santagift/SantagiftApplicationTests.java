@@ -1,10 +1,10 @@
-package exo.backend;
+package ex.santagift;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class SantagiftApplicationTests {
 
 	@Test
 	void contextLoads() {

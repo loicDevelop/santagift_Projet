@@ -1,13 +1,13 @@
-package exo.backend;
+package ex.santagift;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class SantagiftApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication.run(SantagiftApplication.class, args);
+		System.out.println("- -- --- That's fine I mean --- -- - ");
 	}
-
 }
