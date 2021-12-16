@@ -2,7 +2,9 @@ package ex.santagift.webRest;
 
 import ex.santagift.models.Gift;
 import ex.santagift.services.GiftServiceImplement;
+import ex.santagift.services.dto.GiftDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +18,27 @@ public class GiftController {
     private GiftServiceImplement service;
 
     @GetMapping("")
-    public List<Gift> findAll() {
-        return this.service.findAll();
+    @ResponseBody
+    public List<GiftDto> getAll() {
+        return this.service.getAll();
     }
 
     @GetMapping("{id}")
-    public Gift findById(@PathVariable Long id) {
-        return this.service.findById(id);
+    @ResponseBody
+    public GiftDto getGiftById(@PathVariable Long id) throws Exception {
+        return this.service.findGiftById(id);
     }
 
     @PostMapping("")
-    public Gift save(@RequestBody Gift gift) {
-        return this.service.save(gift);
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public GiftDto createGift(@RequestBody GiftDto giftDto) {
+        return this.service.saveGift(giftDto);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteGift(@PathVariable Long id) {
         this.service.delete(id);
     }
 }

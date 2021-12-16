@@ -1,8 +1,9 @@
 package ex.santagift.webRest;
 
-import ex.santagift.models.User;
 import ex.santagift.services.UserServiceImplement;
+import ex.santagift.services.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +17,27 @@ public class UserController {
     private UserServiceImplement service;
 
     @GetMapping("")
-    public List<User> findAll() {
-        return this.service.findAll();
+    @ResponseBody
+    public List<UserDto> getAll() {
+        return this.service.getAll();
     }
 
     @GetMapping("{id}")
-    public User findById(@PathVariable Long id) {
-        return this.service.findById(id);
+    @ResponseBody
+    public UserDto getUserById(@PathVariable Long id) throws Exception {
+        return this.service.findUserById(id);
     }
 
     @PostMapping("")
-    public User save(@RequestBody User user) {
-        return this.service.save(user);
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return this.service.saveUser(userDto);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(@PathVariable Long id) {
         this.service.delete(id);
     }
 }
