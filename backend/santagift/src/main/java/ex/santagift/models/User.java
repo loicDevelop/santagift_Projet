@@ -22,6 +22,6 @@ public class User {
     private String password;
 
     @OneToMany
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private List<Gift> gifts;
 }

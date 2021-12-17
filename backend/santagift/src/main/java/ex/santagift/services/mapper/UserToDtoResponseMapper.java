@@ -11,9 +11,6 @@ import java.util.List;
 @Component
 public class UserToDtoResponseMapper implements ToDtoMapper<User, UserDtoResponse> {
 
-    @Autowired
-    private GiftToDtoMapper giftToDtoMapper;
-
     public UserDtoResponse toDto(User user) {
         if (user == null) {
             return null;

@@ -12,7 +12,7 @@ import java.util.List;
 public class UserToEntityMapper implements ToEntityMapper<UserDto, User> {
 
     @Autowired
-    private GiftToEntityMapper giftToEntityMapper;
+    private GiftDtoResponseToEntityMapper giftDtoResponseToEntityMapper;
 
     public User toEntity(UserDto userDto) {
         if (userDto == null) {
@@ -23,7 +23,7 @@ public class UserToEntityMapper implements ToEntityMapper<UserDto, User> {
         user.setName(userDto.getName());
         user.setPseudo(userDto.getPseudo());
         user.setPassword(userDto.getPassword());
-        user.setGifts(giftToEntityMapper.toEntity(userDto.getGifts()));
+        user.setGifts(giftDtoResponseToEntityMapper.toEntity(userDto.getGifts()));
 
         return user;
     }

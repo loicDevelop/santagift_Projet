@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class GiftToEntityMapper implements ToEntityMapper<GiftDto,Gift> {
+public class GiftToEntityMapper implements ToEntityMapper<GiftDto, Gift> {
 
     @Autowired
-    private UserToEntityMapper userToEntityMapper;
+    private UserDtoResponseToEntityMapper userDtoResponseToEntityMapper;
 
     public Gift toEntity(GiftDto giftDto) {
         if (giftDto == null) {
@@ -24,8 +24,12 @@ public class GiftToEntityMapper implements ToEntityMapper<GiftDto,Gift> {
         gift.setUrl(giftDto.getUrl());
         gift.setPrix(giftDto.getPrix());
         gift.setImg(giftDto.getImg());
-        gift.setUserIdWant(userToEntityMapper.toEntity(giftDto.getUserIdWant()));
-        gift.setUserIdOffer(userToEntityMapper.toEntity(giftDto.getUserIdOffer()));
+        if( giftDto.getUserIdWant() != null) {
+            gift.setUserIdWant(userDtoResponseToEntityMapper.toEntity(giftDto.getUserIdWant()));
+        }
+        if( giftDto.getUserIdOffer() != null) {
+            gift.setUserIdOffer(userDtoResponseToEntityMapper.toEntity(giftDto.getUserIdOffer()));
+        }
         return gift;
     }
 

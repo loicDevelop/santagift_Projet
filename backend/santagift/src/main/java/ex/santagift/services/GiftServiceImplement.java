@@ -3,6 +3,9 @@ package ex.santagift.services;
 import ex.santagift.models.Gift;
 import ex.santagift.repositories.GiftRepositorie;
 import ex.santagift.services.dto.GiftDto;
+import ex.santagift.services.dto.GiftDtoCreate;
+import ex.santagift.services.mapper.GiftDtoCreateToEntityMapper;
+import ex.santagift.services.mapper.GiftDtoResponseToEntityMapper;
 import ex.santagift.services.mapper.GiftToDtoMapper;
 import ex.santagift.services.mapper.GiftToEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,15 @@ public class GiftServiceImplement extends GenericServiceImplement<Gift> {
     @Autowired
     private GiftToDtoMapper giftToDtoMapper;
 
+    @Autowired
+    private GiftDtoCreateToEntityMapper giftDtoCreateToEntityMapper;
+
     public GiftServiceImplement(JpaRepository<Gift, Long> repository) {
         super(repository);
+    }
+
+    public List<GiftDto> getAll() {
+        return giftToDtoMapper.toDto(repositorie.findAll());
     }
 
     public GiftDto findGiftById(Long id) throws Exception {
@@ -37,13 +47,23 @@ public class GiftServiceImplement extends GenericServiceImplement<Gift> {
         return giftToDtoMapper.toDto(gift);
     }
 
-    public GiftDto saveGift(GiftDto giftDto) {
+    public Gift createGift(GiftDtoCreate giftDtoCreate) {
+        Gift gift = giftDtoCreateToEntityMapper.toEntity(giftDtoCreate);
+        repositorie.save(gift);
+        return gift;
+    }
+
+    public GiftDto modifyGift(GiftDto giftDto) {
         Gift gift = giftToEntityMapper.toEntity(giftDto);
         repositorie.save(gift);
         return giftToDtoMapper.toDto(gift);
     }
 
-    public List<GiftDto> getAll() {
-        return giftToDtoMapper.toDto(repositorie.findAll());
+    public void deleteGift(Long id) throws Exception {
+        Optional<Gift> oGift = repositorie.findById(id);
+        if (!oGift.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        repositorie.delete(oGift.get());
     }
 }

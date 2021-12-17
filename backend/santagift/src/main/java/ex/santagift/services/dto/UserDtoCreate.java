@@ -2,20 +2,11 @@ package ex.santagift.services.dto;
 
 import java.util.List;
 
-public class UserDto {
-    private Long id;
+public class UserDtoCreate {
     private String name;
     private String pseudo;
     private String password;
     private List<GiftDtoResponse> gifts;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -51,8 +42,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDto{" +
-                "id=" + id +
+        return "UserDtoCreate{" +
                 ", name='" + name + '\'' +
                 ", pseudo='" + pseudo + '\'' +
                 ", password='" + password + '\'' +

@@ -1,6 +1,8 @@
 package ex.santagift.services.mapper;
 
+import ex.santagift.models.Gift;
 import ex.santagift.models.User;
+import ex.santagift.repositories.GiftRepositorie;
 import ex.santagift.services.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,10 @@ import java.util.List;
 public class UserToDtoMapper implements ToDtoMapper<User, UserDto> {
 
     @Autowired
-    private GiftToDtoMapper giftToDtoMapper;
+    private GiftRepositorie giftRepositorie;
+
+    @Autowired
+    private GiftToDtoResponseMapper giftToDtoResponseMapper;
 
     public UserDto toDto(User user) {
         if (user == null) {
@@ -23,7 +28,10 @@ public class UserToDtoMapper implements ToDtoMapper<User, UserDto> {
         userDto.setName(user.getName());
         userDto.setPseudo(user.getPseudo());
         userDto.setPassword(user.getPassword());
-        userDto.setGifts(giftToDtoMapper.toDto(user.getGifts()));
+        List<Gift> gifts = mapGift(user.getId());
+        if(gifts.size() >= 1) {
+            userDto.setGifts(giftToDtoResponseMapper.toDto(user.getGifts()));
+        }
         return userDto;
     }
 
@@ -36,5 +44,9 @@ public class UserToDtoMapper implements ToDtoMapper<User, UserDto> {
             users.add(toDto(user));
         }
         return users;
+    }
+
+    private List<Gift> mapGift(Long idUser){
+        return giftRepositorie.findAllByUserId(idUser);
     }
 }
